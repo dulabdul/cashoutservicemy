@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg'; // <--- TAMBAHAN: Definisi prop size
   fullWidth?: boolean;
   withIcon?: boolean;
   external?: boolean;
@@ -15,13 +16,15 @@ export default function Button({
   className,
   href,
   variant = 'primary',
+  size = 'md', // <--- TAMBAHAN: Default size
   fullWidth,
   withIcon,
   external,
   ...props
 }: ButtonProps) {
+  // Base styles (padding dipindah ke object sizes)
   const baseStyles =
-    'inline-flex items-center justify-center rounded-full px-8 py-3 text-base font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+    'inline-flex items-center justify-center rounded-full font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
 
   const variants = {
     primary:
@@ -32,9 +35,17 @@ export default function Button({
       'border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-rose-50',
   };
 
+  // <--- TAMBAHAN: Definisi style ukuran
+  const sizes = {
+    sm: 'px-4 py-2 text-sm',
+    md: 'px-8 py-3 text-base',
+    lg: 'px-10 py-4 text-lg',
+  };
+
   const combinedClasses = cn(
     baseStyles,
     variants[variant],
+    sizes[size], // <--- Menggunakan size class
     fullWidth && 'w-full',
     className
   );
